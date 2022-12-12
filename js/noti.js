@@ -26,18 +26,18 @@ function isNotiPermission() {
     }
 }
 
-// function onNotiSend() {
-//     if(Notification.permission === "granted"){
-//         notification = new Notification("hello", {body: "hello world"})
-//     }
-// }
+function onNotiSend() {
+    if(Notification.permission === "granted"){
+        notification = new Notification("hello", {body: "hello world", icon:'icon-128.png'})
+    }
+}
 
 window.addEventListener("load", isNotiPermission);
 
 notiSupport.addEventListener("click", isNotiSupport);
-// notiSendBtn.addEventListener("click", onNotiSend);
+notiSendBtn.addEventListener("click", onNotiSend);
 
 
-notification = new Notification("hello", {body:"hellow world", icon:'icon-128.png'});
-console.log(notification);
+// notification = new Notification("hello", {body:"hellow world", icon:'icon-128.png'});
+// console.log(notification);
 console.log(Notification.permission);
