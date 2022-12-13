@@ -5,6 +5,13 @@ const notiPermissionBtn = notiPermission.querySelector("button");
 const notiPermissionSpan = notiPermission.querySelector("span");
 const notiSend = document.getElementById("noti-send");
 const notiSendBtn = notiSend.querySelector("button"); 
+const notiTime = document.getElementById("noti-time");
+const notiTimeInput = notiTime.querySelector("input");
+const notiTimeBtn = notiTime.querySelector("button");
+
+function saveTime(newTime) {
+    localStorage.setItem("settime", newTime);
+}
 
 function isNotiSupport() {
     if(window.Notification) {
@@ -46,8 +53,17 @@ function onNotiSend() {
     }
 }
 
+function onNotiTime(event) {
+    event.preventDefault();
+    const newTime = notiTimeInput.value;
+    notiTimeInput.value = "";
+    saveTime(newTime);
+}
+
 window.addEventListener("load", isNotiPermission);
 window.addEventListener("load", isNotiSupport);
 
 notiPermissionBtn.addEventListener("click", onNotiPermission);
-notiSendBtn.addEventListener("click", onNotiSend);
+notiTime.addEventListener("submit", onNotiTime);
+
+//setInterval(onNotiSend, parseInt(localStorage.getItem("settime"))*1000);
