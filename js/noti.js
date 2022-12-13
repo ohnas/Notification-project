@@ -1,5 +1,4 @@
 const notiSupport = document.getElementById("noti-support");
-const notiSupportBtn = notiSupport.querySelector("button");
 const notiSupportSpan = notiSupport.querySelector("span");
 const notiPermission = document.getElementById("noti-permission");
 const notiPermissionBtn = notiPermission.querySelector("button");
@@ -19,12 +18,21 @@ function isNotiPermission() {
     if(Notification.permission === "granted") {
         notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
     } else {
+        // clssList 사용해서 css 요소 컨트롤
+        notiPermissionBtn.classList.remove("permisson-button");
         notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 왼쪽버튼을 눌러서 알림기능을 허용해주세요";
-        function onNotiPermission() {
-            Notification.requestPermission();
-        }
-        notiPermissionBtn.addEventListener("click", onNotiPermission);
     }
+}
+
+function onNotiPermission() {
+    Notification.requestPermission(function (permission){
+        if (permission === "granted") {
+            notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
+            notiPermissionBtn.classList.add("permisson-button");
+        } else {
+            notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 왼쪽버튼을 눌러서 알림기능을 허용해주세요";
+        }
+    })
 }
 
 function onNotiSend() {
@@ -39,6 +47,7 @@ function onNotiSend() {
 }
 
 window.addEventListener("load", isNotiPermission);
+window.addEventListener("load", isNotiSupport);
 
-notiSupportBtn.addEventListener("click", isNotiSupport);
+notiPermissionBtn.addEventListener("click", onNotiPermission);
 notiSendBtn.addEventListener("click", onNotiSend);
