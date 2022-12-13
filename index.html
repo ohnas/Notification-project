@@ -15,22 +15,27 @@
     </div>
 
     <div id="noti-permission">
-        <button class="permisson-button">알림 허용</button>
-        <span></span>
-    </div>
-
-    <div id="noti-send">
-        <button>알림 보내기</button>
+        <button class="hidden">알림 허용</button>
         <span></span>
     </div>
 
     <form id="noti-time">
-        <input type="number" min="10" max="100" step="10" required />초
+        <span></span>
+        <label for="noti-time-select"></label>
+        <select id="noti-time-select">
+            <option>선택해주세요</option>
+            <option>10분</option>
+            <option>20분</option>
+            <option>30분</option>
+            <option>40분</option>
+            <option>50분</option>
+            <option>60분</option>
+        </select>
         <button type="submit">설정</button>
     </form>
 
     <form id="todo-form">
-        <input type="text" required />
+        <input type="text" placeholder="적고싶은 문장을 적고 엔터" required />
     </form>
     <ul id="todo-list"></ul>
     <script src="js/app.js"></script>

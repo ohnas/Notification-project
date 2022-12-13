@@ -3,14 +3,14 @@ const notiSupportSpan = notiSupport.querySelector("span");
 const notiPermission = document.getElementById("noti-permission");
 const notiPermissionBtn = notiPermission.querySelector("button");
 const notiPermissionSpan = notiPermission.querySelector("span");
-const notiSend = document.getElementById("noti-send");
-const notiSendBtn = notiSend.querySelector("button"); 
 const notiTime = document.getElementById("noti-time");
-const notiTimeInput = notiTime.querySelector("input");
+const notiTimeSpan = notiTime.querySelector("span");
+const notiTimeSelect = notiTime.querySelector("select");
 const notiTimeBtn = notiTime.querySelector("button");
 
 function saveTime(newTime) {
     localStorage.setItem("settime", newTime);
+    notiTimeSpan.innerText = `현재 설정되어 있는 알림주기는 ${localStorage.getItem("settime")} 입니다`
 }
 
 function isNotiSupport() {
@@ -42,6 +42,21 @@ function onNotiPermission() {
     })
 }
 
+function paintNotiTime() {
+    if(localStorage.getItem("settime") === null) {
+        notiTimeSpan.innerText = "알림주기를 선택해주세요"
+    } else {
+        notiTimeSpan.innerText = `현재 설정되어 있는 알림주기는 ${localStorage.getItem("settime")} 입니다`
+    }
+}
+
+function setNotiTime(event) {
+    event.preventDefault();
+    const newTime = notiTimeSelect.value;
+    saveTime(newTime);
+    notiTimeSelect.selectedIndex = 0;
+}
+
 function onNotiSend() {
     if(Notification.permission === "granted"){
         // localstorage에서 꺼내오는 것들은 let 으로 생성하여 변경가능 할 수 있도록
@@ -53,17 +68,15 @@ function onNotiSend() {
     }
 }
 
-function onNotiTime(event) {
-    event.preventDefault();
-    const newTime = notiTimeInput.value;
-    notiTimeInput.value = "";
-    saveTime(newTime);
+function offNotiSend() {
+
 }
 
 window.addEventListener("load", isNotiPermission);
 window.addEventListener("load", isNotiSupport);
+window.addEventListener("load", paintNotiTime);
 
 notiPermissionBtn.addEventListener("click", onNotiPermission);
-notiTime.addEventListener("submit", onNotiTime);
+notiTime.addEventListener("submit", setNotiTime);
 
-//setInterval(onNotiSend, parseInt(localStorage.getItem("settime"))*1000);
+//setInterval(onNotiSend, parseInt(localStorage.getItem("settime").replace('0분',''))*600000);
