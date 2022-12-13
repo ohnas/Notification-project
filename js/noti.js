@@ -7,6 +7,11 @@ const notiTime = document.getElementById("noti-time");
 const notiTimeSpan = notiTime.querySelector("span");
 const notiTimeSelect = notiTime.querySelector("select");
 const notiTimeBtn = notiTime.querySelector("button");
+const notiOn = document.getElementById("noti-on");
+const notiOff = document.getElementById("noti-off");
+const notiStateSpan = document.getElementById("noti-state"); 
+
+let interval
 
 function saveTime(newTime) {
     localStorage.setItem("settime", newTime);
@@ -18,6 +23,9 @@ function isNotiSupport() {
         notiSupportSpan.innerText = "현재 브라우저는 알림기능을 지원하는 브라우저입니다.";
     } else {
         notiSupportSpan.innerText = "현재 브라우저는 알림기능을 지원하지 않는 브라우저입니다. 다른 브라우저를 사용해주세요.";
+        notiPermission.classList.add("hidden");
+        notiTime.classList.add("hidden");
+        notiToggle.classList.add("hidden");
     }
 }
 
@@ -26,8 +34,10 @@ function isNotiPermission() {
         notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
     } else {
         // clssList 사용해서 css 요소 컨트롤
-        notiPermissionBtn.classList.remove("permisson-button");
+        notiPermissionBtn.classList.remove("hidden");
         notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 왼쪽버튼을 눌러서 알림기능을 허용해주세요";
+        notiTime.classList.add("hidden");
+        notiToggle.classList.add("hidden");
     }
 }
 
@@ -57,7 +67,7 @@ function setNotiTime(event) {
     notiTimeSelect.selectedIndex = 0;
 }
 
-function onNotiSend() {
+function createNoti() {
     if(Notification.permission === "granted"){
         // localstorage에서 꺼내오는 것들은 let 으로 생성하여 변경가능 할 수 있도록
         let obj = localStorage.getItem("todos");
@@ -68,8 +78,14 @@ function onNotiSend() {
     }
 }
 
-function offNotiSend() {
+function onNotiSend() {
+    interval = setInterval(createNoti, parseInt(localStorage.getItem("settime").replace('0분',''))*600000);
+    notiStateSpan.innerText = "현재 알림 상태는 ON 입니다"
+}
 
+function offNotiSend() {
+    clearInterval(interval);
+    notiStateSpan.innerText = "현재 알림 상태는 OFF 입니다"
 }
 
 window.addEventListener("load", isNotiPermission);
@@ -78,5 +94,5 @@ window.addEventListener("load", paintNotiTime);
 
 notiPermissionBtn.addEventListener("click", onNotiPermission);
 notiTime.addEventListener("submit", setNotiTime);
-
-//setInterval(onNotiSend, parseInt(localStorage.getItem("settime").replace('0분',''))*600000);
+notiOn.addEventListener("click", onNotiSend);
+notiOff.addEventListener("click", offNotiSend);
