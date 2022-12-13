@@ -1,4 +1,5 @@
 const notiSupport = document.getElementById("noti-support");
+const notiSupportBtn = notiSupport.querySelector("button");
 const notiSupportSpan = notiSupport.querySelector("span");
 const notiPermission = document.getElementById("noti-permission");
 const notiPermissionBtn = notiPermission.querySelector("button");
@@ -28,16 +29,16 @@ function isNotiPermission() {
 
 function onNotiSend() {
     if(Notification.permission === "granted"){
-        notification = new Notification("hello", {body: "hello world", icon:'icon-128.png'})
+        // localstorage에서 꺼내오는 것들은 let 으로 생성하여 변경가능 할 수 있도록
+        let obj = localStorage.getItem("todos");
+        const items = JSON.parse(obj);
+        const item = items[Math.floor(Math.random()*items.length)];
+        const text = item.text;
+        notification = new Notification("동기부여 합시다", {body: `${text}`, icon:'icon-128.png'})
     }
 }
 
 window.addEventListener("load", isNotiPermission);
 
-notiSupport.addEventListener("click", isNotiSupport);
+notiSupportBtn.addEventListener("click", isNotiSupport);
 notiSendBtn.addEventListener("click", onNotiSend);
-
-
-// notification = new Notification("hello", {body:"hellow world", icon:'icon-128.png'});
-// console.log(notification);
-console.log(Notification.permission);
