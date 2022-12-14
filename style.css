@@ -1,14 +1,17 @@
-.hidden {
-    display: none;
-}
-
 #noti-support {
     text-align: center;
 }
 
 #noti-permission {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: -30px;
+}
+
+#noti-permission button {
+    width: 20%;
 }
 
 #noti-time {
@@ -16,6 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
 }
 
 #noti-time select {
@@ -69,3 +73,6 @@
     margin-left: 10px;
 }
 
+.hidden {
+    display: none;
+}

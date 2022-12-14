@@ -10,7 +10,8 @@ const notiTimeBtn = notiTime.querySelector("button");
 const notiToggle = document.getElementById("noti-toggle");
 const notiOn = document.getElementById("noti-on");
 const notiOff = document.getElementById("noti-off");
-const notiStateSpan = document.getElementById("noti-state"); 
+const notiStateSpan = document.getElementById("noti-state");
+const todoForm = document.getElementById("todo-form");
 
 let interval
 
@@ -25,9 +26,6 @@ function isNotiSupport() {
         isNotiPermission();
     } else {
         notiSupporth1.innerText = "현재 브라우저는 알림기능을 지원하지 않는 브라우저입니다. 다른 브라우저를 사용해주세요.";
-        notiPermission.classList.add("hidden");
-        notiTime.classList.add("hidden");
-        notiToggle.classList.add("hidden");
     }
 }
 
@@ -39,9 +37,7 @@ function isNotiPermission() {
     } else {
         // clssList 사용해서 css 요소 컨트롤
         notiPermissionBtn.classList.remove("hidden");
-        notiPermissionh3.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 왼쪽버튼을 눌러서 알림기능을 허용해주세요";
-        notiTime.classList.add("hidden");
-        notiToggle.classList.add("hidden");
+        notiPermissionh3.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 아래버튼을 눌러서 알림기능을 허용해주세요";
     }
 }
 
@@ -50,8 +46,6 @@ function onNotiPermission() {
         if (permission === "granted") {
             notiPermissionh3.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
             notiPermissionBtn.classList.add("hidden");
-            notiTime.classList.remove("hidden");
-            notiToggle.classList.remove("hidden");
             paintNotiTime();
             offNotiSend();
         } else {
@@ -93,6 +87,8 @@ function onNotiSend() {
         notiStateSpan.innerText = "현재 알림 상태는 ON 입니다";
     } else if(localStorage.getItem("todos") === null) {
         notiStateSpan.innerText = "알림을 보낼 목록이 존재하지 않습니다. 먼저 목록을 만들어주세요.";
+    } else {
+        notiStateSpan.innerText = "알림기능이 거부되어 있습니다. 먼저 알림 허용을 해주세요";
     }
 }
 
