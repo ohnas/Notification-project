@@ -34,6 +34,8 @@ function isNotiSupport() {
 function isNotiPermission() {
     if(Notification.permission === "granted") {
         notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
+        paintNotiTime();
+        offNotiSend();
     } else {
         // clssList 사용해서 css 요소 컨트롤
         notiPermissionBtn.classList.remove("hidden");
@@ -70,6 +72,7 @@ function setNotiTime(event) {
     event.preventDefault();
     const newTime = notiTimeSelect.value;
     saveTime(newTime);
+    paintNotiTime();
     notiTimeSelect.selectedIndex = 0;
 }
 
@@ -85,8 +88,12 @@ function createNoti() {
 }
 
 function onNotiSend() {
-    interval = setInterval(createNoti, parseInt(localStorage.getItem("settime").replace('0분',''))*600000);
-    notiStateSpan.innerText = "현재 알림 상태는 ON 입니다"
+    if(Notification.permission === "granted" && localStorage.getItem("todos") !== null) {
+        interval = setInterval(createNoti, parseInt(localStorage.getItem("settime").replace('0분',''))*600000);
+        notiStateSpan.innerText = "현재 알림 상태는 ON 입니다";
+    } else if(localStorage.getItem("todos") === null) {
+        notiStateSpan.innerText = "알림을 보낼 목록이 존재하지 않습니다. 먼저 목록을 만들어주세요.";
+    }
 }
 
 function offNotiSend() {
