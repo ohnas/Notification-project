@@ -7,7 +7,7 @@ const notiTime = document.getElementById("noti-time");
 const notiTimeSpan = notiTime.querySelector("span");
 const notiTimeSelect = notiTime.querySelector("select");
 const notiTimeBtn = notiTime.querySelector("button");
-const notiToggle = document.getElementById("noti-toggle"); 
+const notiToggle = document.getElementById("noti-toggle");
 const notiOn = document.getElementById("noti-on");
 const notiOff = document.getElementById("noti-off");
 const notiStateSpan = document.getElementById("noti-state"); 
@@ -22,6 +22,7 @@ function saveTime(newTime) {
 function isNotiSupport() {
     if(window.Notification) {
         notiSupportSpan.innerText = "현재 브라우저는 알림기능을 지원하는 브라우저입니다.";
+        isNotiPermission();
     } else {
         notiSupportSpan.innerText = "현재 브라우저는 알림기능을 지원하지 않는 브라우저입니다. 다른 브라우저를 사용해주세요.";
         notiPermission.classList.add("hidden");
@@ -46,7 +47,11 @@ function onNotiPermission() {
     Notification.requestPermission(function (permission){
         if (permission === "granted") {
             notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
-            notiPermissionBtn.classList.add("permisson-button");
+            notiPermissionBtn.classList.add("hidden");
+            notiTime.classList.remove("hidden");
+            notiToggle.classList.remove("hidden");
+            paintNotiTime();
+            offNotiSend();
         } else {
             notiPermissionSpan.innerText = "현재 브라우저는 알림기능을 거부한 상태입니다. 왼쪽버튼을 눌러서 알림기능을 허용해주세요";
         }
@@ -89,12 +94,9 @@ function offNotiSend() {
     notiStateSpan.innerText = "현재 알림 상태는 OFF 입니다"
 }
 
-window.addEventListener("load", isNotiPermission);
-window.addEventListener("load", isNotiSupport);
-window.addEventListener("load", paintNotiTime);
+isNotiSupport();
 
 notiPermissionBtn.addEventListener("click", onNotiPermission);
 notiTime.addEventListener("submit", setNotiTime);
 notiOn.addEventListener("click", onNotiSend);
 notiOff.addEventListener("click", offNotiSend);
-offNotiSend();
