@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 
 <body>
     <div id="noti-support">
-        <span></span>
+        <h1></h1>
     </div>
-
     <div id="noti-permission">
         <button class="hidden">알림 허용</button>
-        <span></span>
+        <h3></h3>
     </div>
-
     <form id="noti-time">
         <span></span>
         <label for="noti-time-select"></label>
@@ -34,13 +33,13 @@
         <button type="submit">설정</button>
     </form>
     <div id="noti-toggle">
-        <span>알림 ON/OFF : </span>
-        <button id="noti-on">알림 ON</button>
-        <button id="noti-off">알림 OFF</button>
+        <span>알림 ON/OFF</span>
+        <button id="noti-on" class="contrast">알림 ON</button>
+        <button id="noti-off" class="secondary">알림 OFF</button>
         <span id="noti-state"></span>
     </div>
     <form id="todo-form">
-        <input type="text" placeholder="적고싶은 문장을 적고 엔터" required />
+        <input type="text" placeholder="기재 후 엔터" required />
     </form>
     <ul id="todo-list"></ul>
     <script src="js/app.js"></script>
