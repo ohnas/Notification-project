@@ -32,7 +32,6 @@ function isNotiSupport() {
 function isNotiPermission() {
     if(Notification.permission === "granted") {
         notiPermissionh3.innerText = "현재 브라우저는 알림기능을 허용한 상태입니다.";
-        notiPermissionBtn.classList.remove("hidden");
         paintNotiTime();
         offNotiSend();
     } else {
